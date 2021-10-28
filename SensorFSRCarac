@@ -1,0 +1,29 @@
+#include <LiquidCrystal.h>
+#define COLS 16 // Columnas del LCD
+#define ROWS 2 // Filas del LCD
+const int rs = 12, en = 11, d4 = 5, d5 = 4, d6 = 3, d7 = 2;
+LiquidCrystal lcd(rs, en, d4, d5, d6, d7);
+void setup() {
+  Serial.begin(9600);
+  lcd.begin(COLS, ROWS);
+}
+
+void loop() {
+  float x=analogRead(A0);
+  float R2=0,R1=10000,Vout=0,m=0,g=9.81;
+  double F=0;
+  Vout=(x*5)/1023;
+  R2=R1*((5/Vout)-1);
+  F=pow((R2/5021.8),-(1/0.703));
+  m=F/g*1000;
+  lcd.print("Fuerza: ");
+  lcd.print(F);
+  lcd.print(" N");
+  lcd.setCursor(0,1);
+  lcd.print("Peso: ");
+  lcd.print(m);
+  lcd.print(" g");
+  delay(1000);
+  lcd.clear();
+  
+}
